@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+source std
+
+
+#---
+## Outputs given string to console.
+## (alias for echo for beter readability).
+## @param  String to print
+#---
+console.log() {
+	echo "$*";
+}

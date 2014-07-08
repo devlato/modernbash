@@ -1,0 +1,50 @@
+#!/bin/bash
+
+
+#---
+## Import module
+## @param  Imported module name
+#---
+use() {
+	echo "std::import($@)"
+	for file in $@; do
+		chmod +x "$file";
+		source "$file";
+	done;
+}
+
+
+declared() {
+	echo "std::declared($@)"
+	return [[ ! -z $1 ]];
+}
+
+
+from() {
+	echo "std::from($@)"
+	module=$1
+	shift 2;
+	names=$@
+	use module;
+	for name in $names; do
+		if [[ -z "$module.$name" && ! -z "$name" && ! $name == $module* ]]; then
+			eval "$module.$name() { return $name $@ }";
+		fi;
+	done;
+}
+
+
+#---
+## Create lambda function
+#---
+lambda() {
+	echo "std::lambda($@)"
+	local body=$1
+	shift;
+	__lambda() {
+		eval "$body";
+	}
+	__lambda "$*";
+	unset -f __lambda;
+}
+
