@@ -48,3 +48,15 @@ fs.setUnixPermission() {
 	local command="chmod $isRecursive $mode $file"
 	eval $command
 }
+
+
+#---
+## Remove files
+## @param  [List of] Files to remove
+#---
+fs.unlink() {
+	console.log "fs::unlink($@)"
+	local files=$@
+	rm -rf $files
+}
+

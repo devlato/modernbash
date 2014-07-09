@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+source std
+
+
+use console
+
+
+#---
+## Ping remote host
+## @param  Address
+## @param  Amount of tries
+#---
+network.ping() {
+	console.log "network::ping($@)"
+	local address=$1
+	local count=""
+	if [ ! -z $2 ]; then
+		count="-c $2"
+	fi;
+	local command="ping $address $count"
+	eval $command
+}
